@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KH Bracelet — Fresh Finds, Best Prices</title>
+  <meta name="description" content="KH Bracelet — Fresh Finds, Best Prices. Shop beautiful bracelets." />
+  <style>
+    :root{
+      --accent:#8b5cf6;
+      --dark:#0f172a;
+      --muted:#64748b;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--dark);
+      background:var(--bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+    }
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 20px;
+      position:sticky;
+      top:0;
+      background:rgba(255,255,255,0.8);
+      backdrop-filter: blur(6px);
+      z-index:50;
+      border-bottom:1px solid rgba(15,23,42,0.05);
+    }
+    .brand{
+      display:flex;gap:12px;align-items:center;
+    }
+    .brand img{width:40px;height:40px;border-radius:8px;object-fit:cover;}
+    .brand h1{font-size:16px;margin:0;}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    .tagline{font-size:13px;color:var(--muted)}
+    .hero{
+      background-image: url('https://i.ibb.co/W4brPSZ8/istockphoto-1035219558-612x612.jpg');
+      background-size:cover;
+      background-position:center;
+      min-height:60vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:48px 20px;
+      position:relative;
+      color:white;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.4));
+    }
+    .hero-inner{
+      position:relative;z-index:2;max-width:1100px;width:100%;display:flex;flex-direction:column;gap:18px;align-items:flex-start;
+    }
+    .hero h2{font-size:clamp(28px,6vw,44px);margin:0 0 6px 0;line-height:1.02;letter-spacing:-0.02em}
+    .hero p.lead{margin:0;color:rgba(255,255,255,0.92);font-size:16px}
+    .hero .cta{margin-top:8px;}
+    .btn{
+      display:inline-flex;gap:10px;align-items:center;
+      background:var(--accent);
+      color:white;padding:12px 18px;border-radius:10px;border:0;
+      font-weight:600;cursor:pointer;text-decoration:none;
+      box-shadow:0 6px 18px rgba(139,92,246,0.24);
+    }
+    /* Products */
+    main{padding:28px 18px 120px;}
+    .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .section-title h3{margin:0;font-size:18px}
+    .carousel{
+      display:flex;overflow-x:auto;gap:14px;padding-bottom:8px;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+    }
+    .carousel::-webkit-scrollbar{height:8px}
+    .carousel::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.12);border-radius:8px}
+    .card{
+      flex:0 0 72%;
+      max-width:360px;
+      background:var(--card);
+      border-radius:14px;
+      box-shadow:0 6px 18px rgba(15,23,42,0.06);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    @media(min-width:700px){
+      .card{flex:0 0 30%}
+    }
+    .card img{width:100%;height:260px;object-fit:cover}
+    .card .info{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .price{font-weight:700;color:var(--dark)}
+    .add-btn{background:linear-gradient(90deg,var(--accent),#7c3aed);color:white;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+    .small{font-size:13px;color:var(--muted)}
+    /* Floating cart */
+    .floating-cart{
+      position:fixed;right:16px;bottom:92px;background:linear-gradient(180deg,#fff,#f3f4f6);padding:12px;border-radius:999px;
+      box-shadow:0 8px 26px rgba(2,6,23,0.16);z-index:60;cursor:pointer;display:flex;align-items:center;gap:8px;
+      border:1px solid rgba(15,23,42,0.06);
+    }
+    .cart-badge{
+      min-width:22px;height:22px;border-radius:999px;background:var(--accent);color:white;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;padding:2px 6px;
+    }
+    /* Cart drawer */
+    .cart-drawer{
+      position:fixed;right:0;top:0;height:100vh;width:100%;max-width:420px;background:linear-gradient(180deg,#ffffff,#f8fafc);box-shadow:-18px 0 40px rgba(2,6,23,0.12);transform:translateX(110%);transition:transform .28s ease;z-index:70;padding:18px;overflow:auto;
+    }
+    .cart-drawer.open{transform:translateX(0)}
+    .drawer-header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .cart-items{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+    .cart-item{display:flex;gap:10px;align-items:center}
+    .cart-item img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+    .qty{background:rgba(15,23,42,0.05);padding:6px 8px;border-radius:8px}
+    .remove{background:transparent;border:0;color:var(--muted);cursor:pointer}
+    .total-row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(15,23,42,0.06)}
+    .order-form{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+    .order-form input, .order-form textarea{padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);width:100%;font-size:15px}
+    .send-btn{background:var(--accent);color:white;padding:12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+    .small-muted{font-size:13px;color:var(--muted)}
+    /* WhatsApp floating */
+    .whatsapp{
+      position:fixed;right:16px;bottom:16px;background:#25D366;width:56px;height:56px;border-radius:999px;display:flex;align-items:center;justify-content:center;color:white;z-index:60;box-shadow:0 6px 20px rgba(2,6,23,0.14)
+    }
+    footer{padding:24px 18px;text-align:center;color:var(--muted);font-size:14px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="https://i.ibb.co/W4brPSZ8/istockphoto-1035219558-612x612.jpg" alt="KH Bracelet"/>
+      <div>
+        <h1>KH Bracelet</h1>
+        <p class="tagline">Fresh Finds, Best Prices</p>
+      </div>
+    </div>
+    <nav class="small" aria-label="social-links">
+      <a href="https://instagram.com/kh_bracelet_" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none">@kh_bracelet_</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="hero-inner">
+      <h2>Beautiful bracelets for every style</h2>
+      <p class="lead">Handmade looks, everyday prices. Shop our latest collection curated just for you.</p>
+      <div class="cta">
+        <a class="btn" href="#products">Shop Now</a>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="products" aria-labelledby="products-title">
+      <div class="section-title">
+        <h3 id="products-title">Products</h3>
+        <div class="small-muted">Tap or drag to browse</div>
+      </div>
+
+      <div class="carousel" id="productCarousel" aria-live="polite">
+        <!-- Product cards injected by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Cart -->
+  <button class="floating-cart" id="openCart" aria-label="Open cart">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke="#0f172a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="11" cy="20" r="1" fill="#0f172a"/>
+      <circle cx="19" cy="20" r="1" fill="#0f172a"/>
+    </svg>
+    <div class="cart-badge" id="cartCount">0</div>
+  </button>
+
+  <!-- WhatsApp -->
+  <a class="whatsapp" href="https://wa.me/9342691262" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M21 12.1c0 4.4-3.6 8-8 8-1.4 0-2.7-.4-3.9-1.1L3 21l1.4-5.9C3.7 13.8 3 12 3 12 3 7.6 6.6 4 11 4s10 3.6 10 8.1z" fill="#fff"/>
+    </svg>
+  </a>
+
+  <!-- Cart Drawer -->
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-header">
+      <div>
+        <h3 style="margin:0">Your Cart</h3>
+        <div class="small-muted" id="cartItemSummary">0 items</div>
+      </div>
+      <div>
+        <button id="closeCart" style="background:transparent;border:0;font-weight:700;cursor:pointer;color:var(--muted)">Close</button>
+      </div>
+    </div>
+
+    <div class="cart-items" id="cartItemsList">
+      <!-- items -->
+    </div>
+
+    <div class="total-row">
+      <div class="small-muted">Total</div>
+      <div style="font-weight:800" id="cartTotal">₹0</div>
+    </div>
+
+    <form class="order-form" id="orderForm" onsubmit="return false;">
+      <label class="small-muted">Name</label>
+      <input id="customerName" type="text" placeholder="Your name" required>
+
+      <label class="small-muted">Phone</label>
+      <input id="customerPhone" type="tel" pattern="[0-9+ ]{6,20}" placeholder="+91 93426 91262" required>
+
+      <label class="small-muted">Additional notes (optional)</label>
+      <textarea id="notes" rows="3" placeholder="Any message or delivery note"></textarea>
+
+      <button id="sendOrder" class="send-btn" aria-label="Send Order">Send Order</button>
+      <div id="orderStatus" class="small-muted" style="margin-top:8px"></div>
+    </form>
+
+    <div style="height:32px"></div>
+  </aside>
+
+  <footer>
+    <div>Follow on Instagram: <a href="https://instagram.com/kh_bracelet_" target="_blank" rel="noopener">@kh_bracelet_</a></div>
+    <div style="margin-top:8px">Contact: <a href="mailto:jkameshkamesh55@gmail.com">jkameshkamesh55@gmail.com</a></div>
+  </footer>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    /********************************************************************
+     * KH Bracelet — Single Page Store (no-backend)
+     *
+     * INSTRUCTIONS:
+     * 1) Sign up at https://www.emailjs.com/
+     * 2) Create an Email Service (service_xxx) and an Email Template (template_xxx).
+     * 3) From EmailJS get your user/public key (user_xxx).
+     * 4) Replace the placeholders below:
+     *    const EMAILJS_USER_ID = 'YOUR_EMAILJS_USER_ID';
+     *    const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';
+     *    const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+     *
+     * Template recommended variables: customer_name, customer_phone, items, total, notes, to_email
+     *
+     * EmailJS docs: https://www.emailjs.com/docs/
+     ********************************************************************/
+
+    const EMAILJS_USER_ID = 'YOUR_EMAILJS_USER_ID';
+    const EMAILJS_SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID';
+    const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+
+    // Initialize EmailJS if provided
+    if (EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID' && typeof emailjs !== 'undefined') {
+      try { emailjs.init(EMAILJS_USER_ID); } catch (e) { console.warn('EmailJS init failed', e); }
+    }
+
+    // Product data (images provided by user)
+    const products = [
+      { id: 'p1', name: 'Elegant Bracelet A', price: 399, img: 'https://i.ibb.co/HL3yN2BL/IMG-20260228-WA0009.jpg' },
+      { id: 'p2', name: 'Beaded Charm B', price: 499, img: 'https://i.ibb.co/xWyWkRP/IMG-20260228-WA0005.jpg' },
+      { id: 'p3', name: 'Classic Wrap C', price: 299, img: 'https://i.ibb.co/wr7NhsYz/IMG-20260228-WA0007.jpg' },
+      { id: 'p4', name: 'Minimal Loop D', price: 349, img: 'https://i.ibb.co/hxWkHpnC/IMG-20260228-WA0006.jpg' },
+      { id: 'p5', name: 'Stone Accent E', price: 549, img: 'https://i.ibb.co/s98533bT/IMG-20260228-WA0008.jpg' },
+      { id: 'p6', name: 'Handmade Twist F', price: 429, img: 'https://i.ibb.co/h1BhcfWV/IMG-20260216-WA0000.jpg' },
+      { id: 'p7', name: 'Statement Pearl G', price: 699, img: 'https://i.ibb.co/231VPfgk/IMG-20260228-WA0010.jpg' }
+    ];
+
+    // State: cart as object {productId: quantity}
+    const cart = {};
+
+    // DOM refs
+    const carousel = document.getElementById('productCarousel');
+    const cartCountEl = document.getElementById('cartCount');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const openCartBtn = document.getElementById('openCart');
+    const closeCartBtn = document.getElementById('closeCart');
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartItemSummary = document.getElementById('cartItemSummary');
+    const sendOrderBtn = document.getElementById('sendOrder');
+    const orderStatus = document.getElementById('orderStatus');
+
+    // Render products into carousel
+    function renderProducts(){
+      carousel.innerHTML = '';
+      products.forEach(p=>{
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${escapeHtml(p.name)}">
+          <div class="info">
+            <div>
+              <div style="font-weight:700">${escapeHtml(p.name)}</div>
+              <div class="small-muted">Bracelet</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end">
+              <div class="price">₹${p.price}</div>
+              <button class="add-btn" data-id="${p.id}" style="margin-top:8px">Add to Cart</button>
+            </div>
+          </div>
+        `;
+        carousel.appendChild(card);
+      });
+
+      // attach add to cart handlers
+      carousel.querySelectorAll('.add-btn').forEach(btn=>{
+        btn.addEventListener('click', e=>{
+          const id = e.currentTarget.dataset.id;
+          addToCart(id);
+        });
+      });
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    }
+
+    // Cart functions
+    function addToCart(productId, qty = 1){
+      cart[productId] = (cart[productId] || 0) + qty;
+      updateCartUI();
+      animateCartAdd();
+    }
+
+    function removeFromCart(productId){
+      delete cart[productId];
+      updateCartUI();
+    }
+
+    function changeQty(productId, newQty){
+      if(newQty <= 0){ removeFromCart(productId); return; }
+      cart[productId] = newQty;
+      updateCartUI();
+    }
+
+    function getCartItems(){
+      return Object.keys(cart).map(id=>{
+        const prod = products.find(p=>p.id===id);
+        return { ...prod, quantity: cart[id] };
+      });
+    }
+
+    function getCartCount(){
+      return Object.values(cart).reduce((s,q)=>s+q,0);
+    }
+
+    function getCartTotal(){
+      return getCartItems().reduce((s,it)=>s + it.price * it.quantity, 0);
+    }
+
+    function updateCartUI(){
+      // count
+      const count = getCartCount();
+      cartCountEl.textContent = count;
+      cartItemSummary.textContent = `${count} item${count!==1?'s':''}`;
+
+      // items list
+      cartItemsList.innerHTML = '';
+      const items = getCartItems();
+      if(items.length === 0){
+        cartItemsList.innerHTML = '<div class="small-muted">Your cart is empty</div>';
+      } else {
+        items.forEach(item=>{
+          const el = document.createElement('div');
+          el.className = 'cart-item';
+          el.innerHTML = `
+            <img src="${item.img}" alt="${escapeHtml(item.name)}"/>
+            <div style="flex:1">
+              <div style="font-weight:700">${escapeHtml(item.name)}</div>
+              <div class="small-muted">₹${item.price} • <span class="qty">Qty: ${item.quantity}</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+              <div style="font-weight:800">₹${item.price * item.quantity}</div>
+              <div>
+                <button class="remove" data-id="${item.id}">Remove</button>
+              </div>
+            </div>
+          `;
+          cartItemsList.appendChild(el);
+        });
+
+        // attach remove handlers
+        cartItemsList.querySelectorAll('.remove').forEach(btn=>{
+          btn.addEventListener('click', e=>{
+            const id = e.currentTarget.dataset.id;
+            removeFromCart(id);
+          });
+        });
+      }
+
+      cartTotalEl.textContent = `₹${getCartTotal()}`;
+    }
+
+    function animateCartAdd(){
+      openCartBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.08)' }, { transform: 'scale(1)' }], { duration: 300 });
+    }
+
+    // Drawer open/close
+    openCartBtn.addEventListener('click', ()=>{ cartDrawer.classList.add('open'); cartDrawer.setAttribute('aria-hidden','false'); });
+    closeCartBtn.addEventListener('click', ()=>{ cartDrawer.classList.remove('open'); cartDrawer.setAttribute('aria-hidden','true'); });
+
+    // Send order via EmailJS
+    sendOrderBtn.addEventListener('click', async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const notes = document.getElementById('notes').value.trim();
+      const items = getCartItems();
+
+      if(!name || !phone){
+        orderStatus.textContent = 'Please enter your name and phone number.';
+        return;
+      }
+      if(items.length === 0){
+        orderStatus.textContent = 'Your cart is empty.';
+        return;
+      }
+
+      const itemsText = items.map(it => `${it.name} x ${it.quantity} — ₹${it.price * it.quantity}`).join('\n');
+      const total = getCartTotal();
+
+      orderStatus.textContent = 'Sending order...';
+
+      // Prepare template parameters for EmailJS
+      const templateParams = {
+        to_email: 'jkameshkamesh55@gmail.com',
+        customer_name: name,
+        customer_phone: phone,
+        items: itemsText,
+        total: `₹${total}`,
+        notes: notes
+      };
+
+      // Try EmailJS if configured
+      if (EMAILJS_USER_ID && EMAILJS_USER_ID !== 'YOUR_EMAILJS_USER_ID' && typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+        try {
+          const resp = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+          orderStatus.textContent = 'Order sent — we will contact you soon! (EmailJS).';
+          // clear cart
+          for(const k of Object.keys(cart)) delete cart[k];
+          updateCartUI();
+        } catch (err) {
+          console.error('EmailJS send error:', err);
+          orderStatus.textContent = 'Failed to send using EmailJS. Falling back to email link.';
+          // fallback to mailto
+          setTimeout(()=> fallbackMailto(templateParams), 800);
+        }
+      } else {
+        // fallback to mailto if EmailJS not configured
+        fallbackMailto(templateParams);
+      }
+    });
+
+    function fallbackMailto(templateParams){
+      // Construct body
+      const subject = encodeURIComponent('New order from KH Bracelet');
+      const body = encodeURIComponent(
+        `Name: ${templateParams.customer_name}\nPhone: ${templateParams.customer_phone}\n\nItems:\n${templateParams.items}\n\nTotal: ${templateParams.total}\n\nNotes:\n${templateParams.notes}`
+      );
+      const mailto = `mailto:${encodeURIComponent(templateParams.to_email)}?subject=${subject}&body=${body}`;
+      orderStatus.innerHTML = `Couldn't send automatically. <a href="${mailto}" target="_blank">Click here to email your order</a>.`;
+    }
+
+    // Auto-scroll carousel (auto-slide)
+    function startCarouselAutoScroll(){
+      const el = carousel;
+      let idx = 0;
+      const cardWidth = () => (el.querySelector('.card') ? el.querySelector('.card').getBoundingClientRect().width + 14 : 300);
+
+      setInterval(()=>{
+        if(!el || el.scrollWidth <= el.clientWidth) return;
+        idx++;
+        const cw = cardWidth();
+        // Move by one card width each time
+        const next = Math.min(el.scrollLeft + cw, el.scrollWidth - el.clientWidth);
+        el.scrollTo({ left: next, behavior: 'smooth' });
+        if(el.scrollLeft >= (el.scrollWidth - el.clientWidth - 10)) {
+          // back to start
+          setTimeout(()=> el.scrollTo({ left: 0, behavior: 'smooth' }), 1200);
+        }
+      }, 3500);
+    }
+
+    // Initialize page
+    renderProducts();
+    updateCartUI();
+    startCarouselAutoScroll();
+
+    // Small helper to allow "Shop Now" smooth scroll if browser default behavior not supported
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const href = a.getAttribute('href');
+        const target = document.querySelector(href);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior:'smooth', block:'start' });
+        }
+      });
+    });
+
+    // Pre-fill phone pattern placeholder with no spaces for WA contact if needed
+    document.getElementById('customerPhone').placeholder = '+91 9342691262';
+
+    // Accessibility: close drawer on Escape
+    document.addEventListener('keydown', e=>{
+      if(e.key === 'Escape') cartDrawer.classList.remove('open');
+    });
+
+    // Safety: expose cart for debugging (remove in production)
+    window._KH_CART = { addToCart, cart, getCartItems };
+
+  </script>
+</body>
+</html>
